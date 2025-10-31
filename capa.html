@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Capa de Relatório – Exportável</title>
+    <style>
+        :root {
+            --w: 2480;
+            /* px (A4 vertical ~ 300 DPI-ish) */
+            --h: 3508;
+            --accent: #00bfa5;
+            --accent2: #7c3aed;
+            /* roxo elegante */
+            --bg1: #0a2540;
+            /* azul profundo */
+            --bg2: #102a56;
+            --text: #e6f2ff;
+            --muted: #b6c2d5;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: #0b1220;
+            color: #e6e6e6;
+            font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            min-height: 100vh
+        }
+
+        .panel {
+            padding: 18px 16px;
+            border-right: 1px solid #1d263a;
+            background: #0e1526
+        }
+
+        .panel h2 {
+            font-size: 18px;
+            margin: 0 0 10px
+        }
+
+        .panel .group {
+            margin: 14px 0;
+            padding: 12px;
+            border: 1px solid #1b2845;
+            border-radius: 14px;
+            background: #0b1326
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: #9fb3c8;
+            margin: 6px 0 4px
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #263659;
+            background: #0a1328;
+            color: #e6f2ff;
+            outline: none
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #3b82f6
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .actions {
+            display: grid;
+            gap: 10px;
+            margin-top: 14px
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #90a3bc
+        }
+
+        /* Preview area */
+        .stage {
+            position: relative;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto
+        }
+
+        .frame-wrap {
+            position: relative;
+            transform-origin: top left
+        }
+
+        .badge {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            color: #cfe5ff
+        }
+
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 8px
+        }
+
+        .sw {
+            height: 32px;
+            border-radius: 10px;
+            border: 1px solid #22304b;
+            cursor: pointer
+        }
+
+        .foot {
+            font-size: 11px;
+            color: #7f90a8;
+            margin-top: 8px
+        }
+
+        /* Make the giant SVG fit screen using scale */
+        #scale {
+            width: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <aside class="panel">
+            <h2>Configurar Capa</h2>
+            <div class="group">
+                <div class="row">
+                    <div>
+                        <label>Título principal</label>
+                        <input id="titulo" value="RELATÓRIO DE DESEMPENHO" />
+                    </div>
+                    <div>
+                        <label>Período (mês/ano)</label>
+                        <input id="periodo" value="AGOSTO 2025" />
+                    </div>
+                </div>
+                <label>Instituição (linha 1)</label>
+                <input id="inst1" value="INSTITUTO DE DESENVOLVIMENTO LOCAL" />
+                <label>Instituição (linha 2)</label>
+                <input id="inst2" value="DIREÇÃO PROVINCIAL DO MOXICO" />
+                <div class="row">
+                    <div>
+                        <label>Nome</label>
+                        <input id="nome" value="Yuliano Euzébio Silva" />
+                    </div>
+                    <div>
+                        <label>Cargo</label>
+                        <input id="cargo" value="Assistente de Dados" />
+                    </div>
+                </div>
+                <label>Local</label>
+                <input id="local" value="Direção Provincial do Moxico – FAS" />
+                <label>Selo/Chamada (opcional)</label>
+                <input id="selo" value="Programa Kwenda – TSM" />
+                <div class="hint">Todos os campos atualizam a arte automaticamente.</div>
+            </div>
+
+            <div class="group">
+                <label>Escala de visualização</label>
+                <input id="scale" type="range" min="15" max="45" value="27" />
+                <div class="foot">Tamanho real de exportação: 2480 × 3508 px (A4).</div>
+            </div>
+
+            <div class="group">
+                <label>Paleta de cores</label>
+                <div class="palette" id="pal">
+                    <div class="sw" data-p="dark" style="background:linear-gradient(135deg,#0a2540,#102a56)"></div>
+                    <div class="sw" data-p="teal" style="background:linear-gradient(135deg,#00323a,#006d77)"></div>
+                    <div class="sw" data-p="royal" style="background:linear-gradient(135deg,#0d1b2a,#14213d)"></div>
+                    <div class="sw" data-p="sunset" style="background:linear-gradient(135deg,#d41b1e,#CB1E1F)"></div>
+                    <div class="sw" data-p="emerald" style="background:linear-gradient(135deg,#051b11,#064e3b)"></div>
+                </div>
+                <div class="hint">Clique para trocar a combinação de cores.</div>
+            </div>
+
+            <div class="actions">
+                <button id="download">Baixar PNG (Alta Res.)</button>
+                <button id="downloadJPG">Baixar JPG (Alta Res.)</button>
+                <div class="foot">RGB. Para gráfica CMYK, exporte e converta no editor (Photoshop/InDesign) mantendo 300
+                    DPI.</div>
+            </div>
+        </aside>
+
+        <main class="stage">
+            <div class="frame-wrap" id="wrap" style="transform:scale(.27)">
+                <!-- SVG ARTBOARD -->
+                <svg id="cover" xmlns="http://www.w3.org/2000/svg" width="2480" height="3508" viewBox="0 0 2480 3508">
+                    <defs>
+                        <!-- Gradientes dinâmicos -->
+                        <linearGradient id="g-bg" x1="0" y1="0" x2="1" y2="1">
+                            <stop id="g1" offset="0%" stop-color="#0a2540" />
+                            <stop id="g2" offset="100%" stop-color="#102a56" />
+                        </linearGradient>
+                        <linearGradient id="g-accent" x1="0" y1="0" x2="1" y2="1">
+                            <stop id="ga1" offset="0%" stop-color="#00bfa5" stop-opacity=".95" />
+                            <stop id="ga2" offset="100%" stop-color="#7c3aed" stop-opacity=".95" />
+                        </linearGradient>
+                        <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="50" />
+                        </filter>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="18" result="b" />
+                            <feMerge>
+                                <feMergeNode in="b" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <clipPath id="rounded">
+                            <rect x="140" y="140" width="2200" height="3228" rx="64" ry="64" />
+                        </clipPath>
+                    </defs>
+
+                    <!-- Fundo -->
+                    <rect width="2480" height="3508" fill="url(#g-bg)" />
+
+                    <!-- Elementos decorativos (blobs) -->
+                    <g filter="url(#soft)">
+                        <circle cx="-60" cy="260" r="360" fill="#7c3aed" opacity=".25" />
+                        <circle cx="2380" cy="300" r="420" fill="#00bfa5" opacity=".22" />
+                        <circle cx="2300" cy="3400" r="380" fill="#22d3ee" opacity=".18" />
+                        <circle cx="180" cy="3000" r="420" fill="#f59e0b" opacity=".12" />
+                    </g>
+
+                    <!-- Moldura arredondada -->
+                    <g clip-path="url(#rounded)">
+                        <!-- Waves/diagonais -->
+                        <path
+                            d="M0 2200 C600 2000 1000 2400 1600 2200 C2000 2070 2280 1900 2480 2000 L2480 3508 L0 3508 Z"
+                            fill="url(#g-accent)" opacity=".12" />
+                        <path d="M0 800 C500 900 1000 700 1480 820 C1900 930 2200 880 2480 820 L2480 0 L0 0 Z"
+                            fill="url(#g-accent)" opacity=".10" />
+                    </g>
+
+                    <!-- Topo: instituição -->
+                    <g transform="translate(240, 280)">
+                        <text id="t-inst1" x="0" y="0" fill="#cfe5ff" font-size="48" font-weight="600">INSTITUTO DE
+                            DESENVOLVIMENTO LOCAL</text>
+                        <text id="t-inst2" x="0" y="70" fill="#9cc0ff" font-size="42" font-weight="500">DIREÇÃO
+                            PROVINCIAL DO MOXICO</text>
+                    </g>
+
+                    <!-- Título central -->
+                    <g transform="translate(240, 980)">
+                        <text id="t-periodo" x="0" y="0" fill="#99e9ff" font-size="60" font-weight="600"
+                            letter-spacing="3">AGOSTO 2025</text>
+                        <text id="t-titulo" x="0" y="120" fill="#ffffff" font-size="120" font-weight="800">RELATÓRIO DE
+                            DESEMPENHO</text>
+                        <rect x="0" y="170" width="1120" height="10" fill="#00ffd5" opacity=".6" />
+                    </g>
+
+                    <!-- Destaques visuais -->
+                    <g filter="url(#glow)">
+                        <circle cx="2100" cy="1100" r="14" fill="#00ffd5" />
+                        <circle cx="2140" cy="1140" r="10" fill="#a78bfa" />
+                        <circle cx="2060" cy="1180" r="8" fill="#22d3ee" />
+                    </g>
+
+                    <!-- Cartão com dados pessoais -->
+                    <g transform="translate(240, 2700)">
+                        <rect x="0" y="0" width="2000" height="420" rx="34" fill="rgba(255,255,255,.06)"
+                            stroke="rgba(255,255,255,.14)" />
+                        <g transform="translate(40, 70)">
+                            <text x="0" y="0" fill="#9cc0ff" font-size="40" font-weight="600">Dados do Relator</text>
+                            <g transform="translate(0, 70)">
+                                <text id="t-nome" x="0" y="0" fill="#e6f2ff" font-size="46" font-weight="700">Yuliano
+                                    Euzébio Silva</text>
+                                <text id="t-cargo" x="0" y="60" fill="#cfe5ff" font-size="38"
+                                    font-weight="500">Assistente de Dados</text>
+                                <text id="t-local" x="0" y="120" fill="#cfe5ff" font-size="34" font-weight="400">Direção
+                                    Provincial do Moxico – FAS</text>
+                            </g>
+                            <g transform="translate(1400, 0)">
+                                <text x="0" y="0" fill="#9cc0ff" font-size="40" font-weight="600">Identificação</text>
+                                <text x="0" y="70" fill="#e6f2ff" font-size="36">Relatório de Desempenho</text>
+                                <text x="0" y="120" fill="#cfe5ff" font-size="34">Uso institucional</text>
+                            </g>
+                        </g>
+                    </g>
+
+                </svg>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const $ = (s) => document.querySelector(s);
+        const setText = (id, v) => { const el = $(id); if (el) el.textContent = v; };
+
+        function updateFields() {
+            setText('#t-titulo', $('#titulo').value.toUpperCase());
+            setText('#t-periodo', $('#periodo').value.toUpperCase());
+            setText('#t-inst1', $('#inst1').value.toUpperCase());
+            setText('#t-inst2', $('#inst2').value.toUpperCase());
+            setText('#t-nome', $('#nome').value);
+            setText('#t-cargo', $('#cargo').value);
+            setText('#t-local', $('#local').value);
+            const selo = $('#selo').value.trim();
+            setText('#t-selo', selo || '');
+            // Ajusta largura do chip conforme texto
+            const chip = document.getElementById('chip');
+            const bbox = document.getElementById('t-selo').getBBox();
+            chip.setAttribute('width', Math.max(720, bbox.width + 48));
+        }
+        ['#titulo', '#periodo', '#inst1', '#inst2', '#nome', '#cargo', '#local', '#selo']
+            .forEach(id => $(id).addEventListener('input', updateFields));
+
+        // Escala
+        const scaleInput = document.getElementById('scale');
+        const wrap = document.getElementById('wrap');
+        function applyScale() { wrap.style.transform = `scale(${(scaleInput.value / 100).toFixed(2)})`; }
+        scaleInput.addEventListener('input', applyScale);
+
+        // Paletas
+        const palettes = {
+            dark: { bg1: '#0a2540', bg2: '#102a56', a1: '#00bfa5', a2: '#7c3aed' },
+            teal: { bg1: '#00323a', bg2: '#006d77', a1: '#00bfa5', a2: '#22d3ee' },
+            royal: { bg1: '#0d1b2a', bg2: '#14213d', a1: '#3b82f6', a2: '#60a5fa' },
+            sunset: { bg1: '#2b1640', bg2: '#7c3aed', a1: '#ec4899', a2: '#f59e0b' },
+            emerald: { bg1: '#051b11', bg2: '#064e3b', a1: '#22c55e', a2: '#10b981' }
+        };
+        document.getElementById('pal').addEventListener('click', (e) => {
+            const sw = e.target.closest('.sw');
+            if (!sw) return;
+            const p = palettes[sw.dataset.p];
+            if (!p) return;
+            document.getElementById('g1').setAttribute('stop-color', p.bg1);
+            document.getElementById('g2').setAttribute('stop-color', p.bg2);
+            document.getElementById('ga1').setAttribute('stop-color', p.a1);
+            document.getElementById('ga2').setAttribute('stop-color', p.a2);
+        });
+
+        // Export helpers
+        function svgToDataURL(svg) {
+            const s = new XMLSerializer().serializeToString(svg);
+            return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+        }
+        function downloadURI(uri, name) {
+            const a = document.createElement('a');
+            a.href = uri; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+        }
+        function exportRaster(type = 'image/png', quality = 0.92) {
+            const svg = document.getElementById('cover');
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                canvas.width = svg.viewBox.baseVal.width || svg.width.baseVal.value;
+                canvas.height = svg.viewBox.baseVal.height || svg.height.baseVal.value;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const uri = canvas.toDataURL(type, quality);
+                const period = document.getElementById('periodo').value || 'CAPA';
+                const name = `Capa-Relatorio-${period.replace(/\s+/g, '_')}.${type === 'image/png' ? 'png' : 'jpg'}`;
+                downloadURI(uri, name);
+            };
+            img.src = svgToDataURL(svg);
+        }
+
+        document.getElementById('download').addEventListener('click', () => exportRaster('image/png'));
+        document.getElementById('downloadJPG').addEventListener('click', () => exportRaster('image/jpeg', 0.95));
+
+        // Inicializa
+        updateFields();
+        applyScale();
+    </script>
+</body>
+
+</html>

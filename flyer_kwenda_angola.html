@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panfleto Programa Kwenda - Impressão A4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f7;
+        }
+
+        /* Impressão A4 */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                width: 210mm;
+                height: 297mm;
+                print-color-adjust: exact;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .page-break {
+                page-break-after: always;
+            }
+        }
+
+        /* Cabeçalho Premium */
+        .header-bg {
+            background: linear-gradient(135deg, #b91c1c, #fbbf24);
+            color: white;
+            padding: 30px 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .header-bg h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header-bg p {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Rodapé Premium */
+        .footer-bg {
+            background: linear-gradient(180deg, #111827, #1f2937);
+            color: white;
+            
+            padding: 30px 20px;
+            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        /* Cartões e seções */
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estatísticas */
+        .stat-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+            margin: 0 auto 8px auto;
+        }
+
+        /* Títulos */
+        h2, h3, h4 {
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Destaque dourado */
+        .gold-text {
+            background: linear-gradient(45deg, #fbbf24, #fcd34d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Imagens com hover */
+        .hover-zoom {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-zoom:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Conteúdo central */
+        .content {
+            padding: 20px;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+
+        /* Logos */
+        .logo-section img {
+            height: 70px;
+            margin: 0 10px;
+        }
+
+        /* Tags */
+        .tag {
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .tag-red { background-color: #fee2e2; color: #b91c1c; }
+        .tag-yellow { background-color: #fef9c3; color: #b45309; }
+        .tag-gray { background-color: #e5e7eb; color: #374151; }
+    </style>
+</head>
+
+<body>
+    <div class="max-w-4xl mx-auto">
+
+       <div class="header-bg relative overflow-hidden text-center ">
+    <!-- Overlay de opacidade -->
+    <div class="absolute inset-0 bg-black opacity-30"></div>
+    
+    <!-- Imagem de fundo -->
+    <img src="kwenda.png" 
+         alt="Fundo Cabeçalho" 
+         class="absolute inset-0  object-cover object-center">
+
+    <!-- Conteúdo -->
+    <div class="relative z-10 flex flex-col justify-center items-center h-full p-6 md:p-10">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 drop-shadow-lg">
+            KWENDA
+        </h1>
+        <p class="text-base md:text-lg text-white font-semibold mt-2 drop-shadow">
+            Fortalecendo a Proteção Social em Angola
+        </p>
+        <p class="bg-white bg-opacity-20 inline-block px-4 py-1 rounded-full mt-4 text-sm font-semibold">
+            2020-2025
+        </p>
+    </div>
+</div>
+
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <!-- Seção Principal -->
+            <div class="grid md:grid-cols-2 gap-6 mb-10">
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-3 text-gray-800">Transformando Vidas</h2>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                        Iniciativa do Governo de Angola em parceria com o Banco Mundial para apoiar famílias em situação de pobreza, promovendo proteção social e inclusão produtiva.
+                    </p>
+                    <div class="flex flex-wrap">
+                        <span class="tag tag-red mb-2" >TSM</span>
+                        <span class="tag tag-yellow mb-2" >Inclusão Produtiva</span>
+                        <span class="tag tag-gray mb-2">Municipalização da Ação Social</span>
+                        <span class="tag tag-red">Cadastrado Social Único</span>
+                    </div>
+                </div>
+                <div>
+                    <img src="foto2-1-570x450-1.png" alt="Beneficiária" class="w-full rounded-xl hover-zoom">
+                </div>
+            </div>
+
+            <!-- Estatísticas Principais -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10 text-center">
+                <div class="card border-l-4 border-red-600">
+                    <div class="text-2xl font-bold text-red-600">1.336.482</div>
+                    <div class="text-xs text-gray-600">Agregados Pagos</div>
+                </div>
+                <div class="card border-l-4 border-gray-800">
+                    <div class="text-2xl font-bold text-gray-800">1.719.816</div>
+                    <div class="text-xs text-gray-600">Cadastrados</div>
+                </div>
+                <div class="card border-l-4 border-yellow-500">
+                    <div class="text-2xl font-bold text-yellow-600">420M USD</div>
+                    <div class="text-xs text-gray-600">Investimento</div>
+                </div>
+            </div>
+
+            <!-- Cobertura Nacional -->
+            <div class="card mb-10 text-center">
+                <h3 class="text-xl font-bold mb-5 gold-text">Cobertura Nacional</h3>
+                <div class="grid grid-cols-3 gap-6 mb-4">
+                    <div>
+                        <div class="stat-circle bg-gray-800">18</div>
+                        <div class="font-semibold text-gray-800">Províncias</div>
+                    </div>
+                    <div>
+                        <div class="stat-circle bg-gray-800">87</div>
+                        <div class="font-semibold text-gray-800">Municípios</div>
+                    </div>
+                    <div>
+                        <div class="stat-circle bg-gray-800">304</div>
+                        <div class="font-semibold text-gray-800">Comunas</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <span class="font-semibold text-gray-800">14.141</span> Aldeias/Bairros
+                    </div>
+                    <div>
+                        <span class="font-semibold text-gray-800">3.070</span> Agentes (ADECOS)
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+            <!-- Benefícios -->
+            <div class="grid md:grid-cols-2 gap-6 mb-10">
+                <div class="card text-center">
+                    <h4 class="font-bold mb-2">Transferências Monetárias</h4>
+                    <p class="text-sm text-gray-700">Valor: 33.000 Kz/trimestre</p>
+                    <p class="text-sm text-gray-700">Modalidade: 76% numerário</p>
+                    <p class="text-sm text-gray-700">Mulheres beneficiárias: 65%</p>
+                </div>
+                <div class="card text-center">
+                    <h4 class="font-bold mb-2">Inclusão Produtiva</h4>
+                    <p class="text-sm text-gray-700">Beneficiários diretos: 25.573</p>
+                    <p class="text-sm text-gray-700">Beneficiários indiretos: 270.645</p>
+                    <p class="text-sm text-gray-700">Cooperativas: 56</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Rodapé -->
+        <div class="footer-bg">
+            <p class="font-semibold text-lg">Programa Renovado até 2029</p>
+            <div class="flex justify-center gap-4 mt-3 text-xs">
+                <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full">Governo de Angola</span>
+                <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full">Banco Mundial</span>
+                <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full">FAS-IDL</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
